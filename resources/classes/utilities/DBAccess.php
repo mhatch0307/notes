@@ -34,7 +34,7 @@ class DBAccess
 	function connect()
 	{
 		try{
-			$this->db = new PDO("mysql:host=127.0.0.1;dbname=notes", $this->user, $this->password);
+			$this->db = new PDO("mysql:host=127.5.185.2;dbname=notes", $this->user, $this->password);
 		}
 		catch(PDOException $ex){
 			$this->errorMessage = "Error!: " . $ex->getMessage();
