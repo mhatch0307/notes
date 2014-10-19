@@ -1,0 +1,99 @@
+@CHARSET "UTF-8";
+body
+{
+	background:white;
+}
+
+#head
+{
+	
+}
+
+#login
+{
+	width:400px;
+	height:200px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:200px;
+	background:#0066CC;
+	box-shadow: -1px -1px 6px 2px #A0A0A0;
+	border: 0px;
+	border-radius: 25px;
+}
+
+#login form
+{
+	width:300px;
+	margin-left:auto;
+	margin-right:auto;
+	padding-top:55px;
+}
+
+#login input
+{
+	width:200px;
+}
+
+#loginButton
+{
+	width:200px;
+	height:30px;
+	margin-top:10px;
+	margin-left:80px;
+}
+.label
+{
+	font-weight:bold;
+	color:white;
+	width:80px;
+	float:left;
+}
+
+.ui-accordion .ui-accordion-content {padding:2px}
+
+.topic
+{
+	width:96%;
+	margin-left:auto;
+	margin-right:auto;
+}
+.subTopic
+{
+	font-size:14px;
+}
+
+.subTopic:hover
+{
+	background-color: #0099FF;
+}
+
+#classSelector 
+{
+	width:100%;
+	margin-top:5px;
+	height:40px;
+	font-size:18px;
+}
+
+.classes
+{
+	width:96%;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#noteSelector
+{
+	float:left;
+	width:220px;
+	min-height:1000px;
+	background:#0066CC;	
+}
+
+#noteView
+{
+	margin-left:250px;
+}
+
+

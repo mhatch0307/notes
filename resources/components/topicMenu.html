@@ -1,0 +1,13 @@
+{{#topics}}
+	<div class = "topic" topicID = {{topicID}}>
+		<div class = "accordion">
+			<h3>{{name}}</h3>
+			<div>
+				{{#subTopics}}
+					<div class = 'subTopic loadTopicNotes' topicID = {{topicID}}>{{name}}</div>
+				{{/subTopics}}
+				<!-- <div class = 'subTopic addSubTopic' parentID = {{topicID}}>+ add Topic</div>-->
+			</div>
+		</div>
+	</div>
+{{/topics}}
