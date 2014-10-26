@@ -42,6 +42,7 @@ body
 	margin-top:10px;
 	margin-left:80px;
 }
+
 .label
 {
 	font-weight:bold;
@@ -51,6 +52,13 @@ body
 }
 
 .ui-accordion .ui-accordion-content {padding:2px}
+
+.topicButton
+{
+	width:96%;
+	font-size:20px;
+	margin-left:2%;
+}
 
 .topic
 {
@@ -63,9 +71,48 @@ body
 	font-size:14px;
 }
 
-.subTopic:hover
+.editButton
 {
-	background-color: #0099FF;
+	font-size:14px;
+}
+
+.editButton:hover
+{
+	color:#0099FF;
+	cursor:pointer;
+}
+
+.deleteButton
+{
+	font-size:14px;
+}
+
+.deleteButton:hover
+{
+	color:red;
+	cursor:pointer;
+}
+
+.addTopic:hover
+{
+	color:#0099FF;
+	cursor:pointer;
+}
+
+.loadTopicNotes:hover
+{
+	color: #0099FF;
+	cursor:pointer;
+}
+
+.editClass
+{
+	height:45px;
+}
+
+.editClass input
+{
+	height:28px;
 }
 
 #classSelector 
@@ -87,13 +134,42 @@ body
 {
 	float:left;
 	width:220px;
-	min-height:1000px;
+	min-height:800px;
 	background:#0066CC;	
 }
 
 #noteView
 {
 	margin-left:250px;
+}
+
+.keyTerm
+{
+	font-weight:bold;
+	width:9%;
+	border-color:#D8D8D8;
+	border-left: 0;
+	border-right: 0;
+	border-top: 0;
+}
+
+.description
+{
+	width:89%;
+	border-color:#D8D8D8;
+	border-left: 0;
+	border-right: 0;
+	border-top: 0;
+}
+
+.left
+{
+	float:left;
+}
+
+.right
+{
+	float:right;
 }
 
 

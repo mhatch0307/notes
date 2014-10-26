@@ -15,7 +15,7 @@ class DBAccess
 	 * @param string $user
 	 * @param string $password
 	 */
-	function __construct($user = "admin2khhnZ1", $password = "AHXtm7R4scYw")
+	function __construct($user = "root", $password = "Xeno88976212!")
 	{
 		$this->user = $user;
 		$this->password = $password;
@@ -34,7 +34,7 @@ class DBAccess
 	function connect()
 	{
 		try{
-			$this->db = new PDO("mysql:host=127.5.185.2;dbname=notes", $this->user, $this->password);
+			$this->db = new PDO("mysql:host=localhost;dbname=notes", $this->user, $this->password);
 		}
 		catch(PDOException $ex){
 			$this->errorMessage = "Error!: " . $ex->getMessage();
@@ -124,13 +124,77 @@ class DBAccess
 		return false;
 	}
 	
-	function insert()
+	function insert($table = "", $values = array())
 	{
-		//TODO: implement to insert data into database	
+		$sql = "INSERT INTO ".$table;
+		$columns = array();
+		$vals = array();
+		foreach($values AS $key => $value)
+		{
+			$vals[] = "'".$value."'";
+			$columns[] = $key;
+		}
+		
+		$sql.=" (".implode(",", $columns).") VALUES(".implode(",", $vals).")";
+		$success = true;
+		$statement = null;
+		try 
+		{
+			$statement = $this->db->prepare($sql);
+			$val = $statement->execute();
+		}
+		catch(PDOException $e)
+		{
+			$this->errorMessage = $e->getMessage();
+			$success = false;
+		}
+		if($success)
+		{
+			return $this->db->lastInsertId();
+		}
+		return false;
 	}
 	
-	function update()
+	function update($table = "", $values = array(), $conditions = array(), $params = array())
 	{
-		//TODO: implement to update data in the database
+		$sql = "UPDATE ".$table." SET ";
+		foreach($values AS $key => $value)
+		{
+			if($value == "INCREMENT")
+			{
+				$sql .= $key . " = " . $key . " + 1 ";
+			}
+			else
+			{
+				$sql .= $key . " = " . "'".$value."'";
+			}
+		}
+		if(sizeOf($params) > 0)
+		{
+			$sql .= " WHERE " . implode(" AND ", $conditions);
+		}
+		echo $sql;
+		$success = true;
+		$statement = null;
+		try 
+		{
+			$statement = $this->db->prepare($sql);
+			$val = $statement->execute($params);
+		}
+		catch(PDOException $e)
+		{
+			$this->errorMessage = $e->getMessage();
+			$success = false;
+		}
+		if($success)
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	function delete($table = "", $params = array())
+	{
+		//TODO: implement to delete rows in the database
 	}
 }

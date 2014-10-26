@@ -1,5 +1,57 @@
 <ol>
 {{#notes}}
-	{{{startList}}}<b>{{keyTerm}}:</b> {{description}}{{{endList}}} 
+		{{{startList}}}
+		<span class = "noteEntry" noteID = {{noteID}} topicID = {{topicID}} noteOrder = {{noteOrder}} indentCount = {{indentCount}} parentID = {{parentID}}>	
+			<input class = "keyTerm" name = "keyTerm" noteID = {{noteID}} value = "{{keyTerm}}"/>
+			<input class = "description" name = "description" noteID = {{noteID}} value = "{{description}}"/>
+		</span>
+		{{{endList}}} 
 {{/notes}}
 </ol>
+
+<!-- <div id="noteView"><ol>
+		<li type="I">
+		<span class="noteEntry" noteid="1" topicid="6" noteorder="1" indentcount="0" parentid="1">	
+			<input class="keyTerm" name="keyTerm" noteid="1" value="Date">
+			<input class="description" name="description" noteid="1" value="April 19, 1775">
+		</span>
+		</li> 
+		<li type="I">
+		<span class="noteEntry" noteid="2" topicid="6" noteorder="2" indentcount="0" parentid="2">	
+			<input class="keyTerm" name="keyTerm" noteid="2" value="Location">
+			<input class="description" name="description" noteid="2" value="Middlesex County of Massachusetts Bay">
+		</span>
+		</li> 
+		<ol><li type="i">
+		<span class="noteEntry" noteid="3" topicid="6" noteorder="3" indentcount="1" parentid="2">	
+			<input class="keyTerm" name="keyTerm" noteid="3" value="Town">
+			<input class="description" name="description" noteid="3" value="Lexington">
+		</span>
+		</li> 
+		<ol><li type="A">
+		<span class="noteEntry" noteid="4" topicid="6" noteorder="4" indentcount="2" parentid="3">	
+			<input class="keyTerm" name="keyTerm" noteid="4" value="Population">
+			<input class="description" name="description" noteid="4" value="123000 ">
+		</span>
+		</li> 
+		<li type="A">
+		<span class="noteEntry" noteid="6" topicid="6" noteorder="5" indentcount="2" parentid="3">	
+			<input class="keyTerm" name="keyTerm" noteid="6" value="Mayor">
+			<input class="description" name="description" noteid="6" value="Unsure...">
+		</span>
+		</li> 
+		</ol><li type="i">
+		<span class="noteEntry" noteid="7" topicid="6" noteorder="6" indentcount="1" parentid="2">	
+			<input class="keyTerm" name="keyTerm" noteid="7" value="Lat Lng">
+			<input class="description" name="description" noteid="7" value="Is this necessary?">
+		</span>
+		</li> 
+		</ol><li type="I">
+		<span class="noteEntry" noteid="5" topicid="6" noteorder="7" indentcount="0" parentid="5">	
+			<input class="keyTerm" name="keyTerm" noteid="5" value="Outcome">
+			<input class="description" name="description" noteid="5" value="Americans Won">
+		</span>
+		</li> 
+</ol>
+
+</div>-->

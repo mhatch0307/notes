@@ -13,4 +13,21 @@
 				$_SERVER['DOCUMENT_ROOT']."/resources/components/noteView.html", false);
 		echo $mustache->render($template, $notes);
 	}
+	elseif($action == "updateKeyTerm")
+	{
+		$notes = new Notes();
+		$notes->updateKeyTerm($_POST['noteID'], $_POST['keyTerm']);
+	}
+	elseif($action == "updateDescription")
+	{
+		$notes = new Notes();
+		$notes->updateDescription($_POST['noteID'], $_POST['description']);
+	}
+	elseif($action == "insertNote")
+	{
+		$notes = new Notes($_SESSION['userID'], $_POST['classID'], $_POST['topicID']);
+		$notes->insertNote(	$_POST['keyTerm'],  
+							$_POST['noteOrder'], 
+							$_POST['parentID']);
+	}
 ?>

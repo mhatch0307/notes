@@ -4,10 +4,13 @@
 			<h3>{{name}}</h3>
 			<div>
 				{{#subTopics}}
-					<div class = 'subTopic loadTopicNotes' topicID = {{topicID}}>{{name}}</div>
+					<div class = 'subTopic' topicID = {{topicID}}>
+						<span class = 'loadTopicNotes'>{{name}}</span>
+						<span class = 'editTopic editButton'>[Edit]</span></div>
 				{{/subTopics}}
-				<!-- <div class = 'subTopic addSubTopic' parentID = {{topicID}}>+ add Topic</div>-->
+					<div class = 'subTopic'><span class = 'addTopic' parentID = {{topicID}} classID = {{classID}}>+ Add Subtopic</span></div>
 			</div>
 		</div>
 	</div>
 {{/topics}}
+<button class = "topicButton" onclick="addTopic()">+ Add Topic</button>

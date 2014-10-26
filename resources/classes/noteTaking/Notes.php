@@ -89,6 +89,10 @@ class Notes
 		return $result;
 	}
 	
+	/**
+	 * 
+	 * @return StdClass
+	 */
 	function buildNoteStructure()
 	{
 		$notes = $this->getNotes();
@@ -141,12 +145,43 @@ class Notes
 			$tempNote->noteID = $note['note_id'];
 			$tempNote->topicID = $note['topic_id'];
 			$tempNote->noteOrder = $note['note_order'];
+			$tempNote->parentID = $note['parent_id'];
 			$tempNote->indentCount = $indentCount;
 			$result[] = $tempNote;
 		}
 		$notes = new StdClass();
 		$notes->notes = $result;
 		return $notes;
+	}
+	
+	/**
+	 * 
+	 * @param int $noteID
+	 * @param string $keyTerm
+	 */
+	function updateKeyTerm($noteID, $keyTerm)
+	{
+		$this->db->update("notes", array("key_term"=>$keyTerm), array("note_id = :note_id"), array(":note_id"=>$noteID));
+	}
+	
+	/**
+	 * 
+	 * @param int $noteID
+	 * @param string $description
+	 */
+	function updateDescription($noteID, $description)
+	{
+		$this->db->update("notes", array("description"=>$description), array("note_id = :note_id"), array(":note_id"=>$noteID));
+	}
+	
+	function insertNote($keyTerm, $noteOrder, $parentID)
+	{
+		$this->db->update("notes", array("note_order"=>"INCREMENT"), 
+								   array("topic_id = :topic_id", "note_order > :note_order"), 
+								   array(":topic_id"=>$topicID, ":note_order"=>$noteOrder));
+		
+		$this->db->insert("notes", array("user_id"=>$this->userID, "class_id"=>$this->classID, "topic_id"=>$this->topicID,
+										 "key_term"=>$keyTerm, "parent_id"=>$parentID, "note_order"=>$noteOrder + 1));
 	}
 }
 

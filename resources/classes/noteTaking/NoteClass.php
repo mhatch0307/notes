@@ -49,7 +49,9 @@ class NoteClass
 	function getClasses($filters = array(), $params = array())
 	{
 		$filters[] = "user_id=:userID";
+		$filters[] = "visible=:visible";
 		$params[':userID'] = $this->userID;
+		$params[':visible'] = 1;
 		
 		$sql = "SELECT * 
 				FROM 
@@ -61,6 +63,28 @@ class NoteClass
 		$classes = new StdClass();
 		$classes->classes = $result;
 		return $classes;
+	}
+	
+	/**
+	 * 
+	 * @param string $name
+	 */
+	function addClass($name)
+	{
+		$result = $this->db->insert("classes", array("name"=>$name, "user_id"=>$this->userID));
+		return $result;
+	}
+	
+	/**
+	 * 
+	 * @param int $classID
+	 */
+	function hideClass($classID)
+	{
+		$result = $this->db->update("classes", array("visible"=>0), 
+					array("class_id = :class_id"), 
+				array(":class_id"=>$classID));
+		return $result;
 	}
 }
 

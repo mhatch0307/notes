@@ -1,8 +1,9 @@
 <div class = "classes">
 	<select name = "classes" id = "classSelector" onchange = "loadTopics()">
-			<option value = 0>Select Class</option>
+			<option value = 0 hidden>Select Class</option>
 		{{#classes}}
 			<option value = {{class_id}}>{{name}}</option>
 		{{/classes}}
+			<option value = -1>Edit Classes</option>
 	</select>
 </div>
