@@ -178,7 +178,7 @@ class Notes
 	{
 		$this->db->update("notes", array("note_order"=>"INCREMENT"), 
 								   array("topic_id = :topic_id", "note_order > :note_order"), 
-								   array(":topic_id"=>$topicID, ":note_order"=>$noteOrder));
+								   array(":topic_id"=>$this->topicID, ":note_order"=>$noteOrder));
 		
 		$this->db->insert("notes", array("user_id"=>$this->userID, "class_id"=>$this->classID, "topic_id"=>$this->topicID,
 										 "key_term"=>$keyTerm, "parent_id"=>$parentID, "note_order"=>$noteOrder + 1));
