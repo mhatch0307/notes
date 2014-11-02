@@ -1,3 +1,82 @@
+var keys = {};
+
+$(document).keydown(function (e){
+	keys[e.which] = true;
+	if (keys[13] == true) // insert new note
+	{
+		keys = {};
+		var currNote = $(':focus').parent();
+		var topicID = currNote.attr("topicID");
+		var noteOrder = currNote.attr("noteOrder");
+		var indentCount = currNote.attr("indentCount");
+		var parentID = currNote.attr("parentID");
+		var noteID = currNote.attr("noteID");
+		var classID = $("#classSelector").val();
+		var currNoteOrder = parseInt(currNote.attr("noteOrder")) + 1;
+		if(noteID != undefined && noteID != -1)
+		{
+			$.post("/resources/delegates/noteDelegate.php", {action:"insertNote", keyTerm:"", noteOrder:noteOrder, parentID:parentID, topicID:topicID, classID:classID}, function(result){
+				loadNotes(topicID, currNoteOrder);
+			});
+		}
+	}
+	else if(keys[17] && keys[39]) // indent the current note
+	{
+		keys = {};
+		var focused = $(':focus');
+		if(focused.attr("noteID") > 0)
+		{
+			var currNote = focused.parent();
+			var topicID = currNote.attr("topicID");
+			var prevNote = currNote.parent().prev();
+			if(prevNote.prop('tagName') == "OL"){
+				prevNote = prevNote.prev();
+			}
+			prevNote = prevNote.children();
+			var prevNoteID = prevNote.attr("noteID");
+			var currNoteID = currNote.attr("noteID");
+			var currNoteOrder = parseInt(currNote.attr("noteOrder"));
+			if(prevNoteID > 0)
+			{
+				$.post("/resources/delegates/noteDelegate.php", {action:"updateParent", noteID:currNoteID, parentID:prevNoteID}, function(result){
+					loadNotes(topicID, currNoteOrder);
+				});
+			}
+		}
+		
+	}
+	else if(keys[17] && keys[37]) // unindent the current note
+	{
+		keys = {};
+		var focused = $(':focus');
+		if(focused.attr("noteID") > 0)
+		{
+			var currNote = focused.parent();
+			var topicID = currNote.attr("topicID");
+			var parentNote = currNote.parent().parent().prev().children();
+			if(parentNote.attr("parentID") == parentNote.attr("noteID"))
+			{
+				parentID = currNote.attr("noteID");
+			}
+			else
+			{
+				parentID = parentNote.attr("parentID");
+			}
+			var currNoteID = currNote.attr("noteID");
+			var currNoteOrder = parseInt(currNote.attr("noteOrder"));
+			if(parentID > 0)
+			{
+				$.post("/resources/delegates/noteDelegate.php", {action:"updateParent", noteID:currNoteID, parentID:parentID}, function(result){
+					loadNotes(topicID, currNoteOrder);
+				});
+			}
+			
+		}
+		
+	}
+	
+});
+
 $(document).ready(function(){
 	loadClasses();
 	$("#editClasses").dialog({
@@ -12,41 +91,11 @@ $(document).ready(function(){
 		position: {my: "left+250 top+10", at: "left top", of: window}
 	});
 	
-	window.onkeyup = function(e)
-	{
-		var key = e.keyCode ? e.keyCode : e.which;
-		if (key == 13)
-		{
-			$currNote = $(':focus').parent();
-			topicID = $currNote.attr("topicID");
-			noteOrder = $currNote.attr("noteOrder");
-			indentCount = $currNote.attr("indentCount");
-			parentID = $currNote.attr("parentID");
-			noteID = $currNote.attr("noteID");
-			classID = $("#classSelector").val();
-			if(noteID != undefined && noteID != -1)
-			{
-				$currNote.parent().append(
-					'<span class = "noteEntry" noteID = -1 topicID = '+topicID+' noteOrder = '+noteOrder+' indentCount = '+indentCount+' parentID = '+parentID+'>'	
-					+	'<input id = "newNote" class = "keyTerm" name = "keyTerm" noteID = -1 value = ""/>'
-					+	'<input class = "description" name = "description" noteID = -1 value = ""/>'
-					+'</span>'
-				);
-				$("#newNote").blur(function(){
-					keyTerm = $(this).val();
-					$.post("/resources/delegates/noteDelegate.php", {action:"insertNote", keyTerm:keyTerm, noteOrder:noteOrder, parentID:parentID, topicID:topicID, classID:classID}, function(result){
-						loadNotes(topicID);
-					});
-				});
-				$currNote.parent().find("[noteID = -1]").find("[name = 'keyTerm']").focus();
-			}
-			else
-			{
-				$currNote.remove();
-			}
-		}
-	}
-	
+	$("#signOut").click(function(){
+		$.post("/resources/utilities/logout.php", {}, function(result){
+			
+		});
+	});
 });
 
 function loadClasses()
@@ -85,6 +134,19 @@ function loadClasses()
 					$("#editClasses").dialog("open");
 				});
 			}
+		});
+		
+		$(".modifyClass").click(function(){
+			var name = $(this).parent().parent().find("input[name = class]").val();
+			var classID = $(this).parent().parent().attr("classID");
+			if(name != "" || name != null)
+			{
+				$.post("/resources/delegates/classDelegate.php", {action:"modfiyClass", name:name, classID:classID}, function(result){
+					loadClasses();
+					$("#editClasses").dialog("open");
+				});
+			}
+			
 		});
 		
 	});
@@ -177,29 +239,40 @@ function addTopic()
 	}
 }
 
-function loadNotes(topicID)
+function loadNotes(topicID, noteFocus)
 {
 	var action = "loadNotes";
 	var classID = $("#classSelector").val();
 	$.post("/resources/delegates/noteDelegate.php", {action:action, topicID:topicID, classID:classID}, 
 		function(result){
-		$("#noteView").html(result);
-		
-		$(".keyTerm").blur(function(){
-			var noteID = $(this).attr("noteID");
-			var keyTerm = $(this).val();
-			$.post("/resources/delegates/noteDelegate.php", {action:"updateKeyTerm", noteID:noteID, keyTerm:keyTerm}, function(result){
-				
+		if(result == 0)
+		{
+			$.post("/resources/delegates/noteDelegate.php", {action:"insertNote", keyTerm:"", noteOrder:1, parentID:-1, topicID:topicID, classID:classID}, function(result){
+				loadNotes(topicID, 1);
 			});
-		});
-		
-		$(".description").blur(function(){
-			var noteID = $(this).attr("noteID");
-			var description = $(this).val();
-			$.post("/resources/delegates/noteDelegate.php", {action:"updateDescription", noteID:noteID, description:description}, function(result){
-				
+		}
+		else
+		{
+			$("#noteView").html(result);
+			$(".keyTerm").blur(function(){
+				var noteID = $(this).attr("noteID");
+				var keyTerm = $(this).val();
+				$.post("/resources/delegates/noteDelegate.php", {action:"updateKeyTerm", noteID:noteID, keyTerm:keyTerm}, function(result){
+					
+				});
 			});
-		});
-		
+			
+			$(".description").blur(function(){
+				var noteID = $(this).attr("noteID");
+				var description = $(this).val();
+				$.post("/resources/delegates/noteDelegate.php", {action:"updateDescription", noteID:noteID, description:description}, function(result){
+					
+				});
+			});
+			if(noteFocus > 0)
+			{
+				$("[noteOrder = "+noteFocus+"]").children(".keyTerm").focus();
+			}
+		}
 	});
 }

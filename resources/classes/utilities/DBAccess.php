@@ -15,7 +15,7 @@ class DBAccess
 	 * @param string $user
 	 * @param string $password
 	 */
-	function __construct($user = "admin2khhnZ1", $password = "AHXtm7R4scYw")
+	function __construct($user = "root", $password = "Xeno88976212!")
 	{
 		$this->user = $user;
 		$this->password = $password;
@@ -124,6 +124,12 @@ class DBAccess
 		return false;
 	}
 	
+	/**
+	 * 
+	 * @param string $table
+	 * @param unknown $values
+	 * @return boolean
+	 */
 	function insert($table = "", $values = array())
 	{
 		$sql = "INSERT INTO ".$table;
@@ -155,6 +161,14 @@ class DBAccess
 		return false;
 	}
 	
+	/**
+	 * 
+	 * @param string $table
+	 * @param unknown $values
+	 * @param unknown $conditions
+	 * @param unknown $params
+	 * @return boolean
+	 */
 	function update($table = "", $values = array(), $conditions = array(), $params = array())
 	{
 		$sql = "UPDATE ".$table." SET ";
@@ -163,6 +177,10 @@ class DBAccess
 			if($value == "INCREMENT")
 			{
 				$sql .= $key . " = " . $key . " + 1 ";
+			}
+			else if(substr($value, -3) == "_id")
+			{
+				$sql .= $key . " = " . $value;
 			}
 			else
 			{
@@ -193,6 +211,11 @@ class DBAccess
 		return false;
 	}
 	
+	/**
+	 * 
+	 * @param string $table
+	 * @param unknown $params
+	 */
 	function delete($table = "", $params = array())
 	{
 		//TODO: implement to delete rows in the database

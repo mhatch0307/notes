@@ -24,7 +24,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/resources/classes/utilities/DBAccess.ph
 		$_SESSION['userID'] = $result['user_id'];
 		$_SESSION['fname'] = $result['fname'];
 		$_SESSION['lname'] = $result['lname'];
-		header('location: ../../home.php');
+		header('location: ../../notes.php');
 	}
 
 ?>

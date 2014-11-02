@@ -75,6 +75,12 @@ class NoteClass
 		return $result;
 	}
 	
+	function editClass($name, $classID)
+	{
+		$result = $this->db->update("classes", array("name"=>$name), array("class_id = :class_id"), array(":class_id"=>$classID));
+		return $result;
+	}
+	
 	/**
 	 * 
 	 * @param int $classID

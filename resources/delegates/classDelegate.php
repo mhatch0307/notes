@@ -26,6 +26,11 @@
 		$noteClass = new NoteClass(floor($_SESSION['userID']));
 		$noteClass->addClass($_POST['name']);
 	}
+	elseif($action == "modfiyClass")
+	{
+		$noteClass = new NoteClass(floor($_SESSION['userID']));
+		$noteClass->editClass($_POST['name'], $_POST['classID']);
+	}
 	elseif($action == "hideClass")
 	{
 		$noteClass = new NoteClass(floor($_SESSION['userID']));

@@ -4,7 +4,7 @@
 		<? include_once $_SERVER['DOCUMENT_ROOT']."/resources/components/header.php";
 		   if(isset($_SESSION['userID']))
 		   {
-		   		header('location: home.php');
+		   		header('location: notes.php');
 		   }
 		?>
 	</head>

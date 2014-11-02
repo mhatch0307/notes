@@ -9,9 +9,16 @@
 	{
 		$notes = new Notes(floor($_SESSION['userID']), floor($_POST['classID']), floor($_POST['topicID']));
 		$notes = $notes->buildNoteStructure();
-		$template = file_get_contents(
-				$_SERVER['DOCUMENT_ROOT']."/resources/components/noteView.html", false);
-		echo $mustache->render($template, $notes);
+		if($notes == false)
+		{
+			echo 0;
+		}
+		else 
+		{
+			$template = file_get_contents(
+					$_SERVER['DOCUMENT_ROOT']."/resources/components/noteView.html", false);
+			echo $mustache->render($template, $notes);
+		}
 	}
 	elseif($action == "updateKeyTerm")
 	{
@@ -29,5 +36,10 @@
 		$notes->insertNote(	$_POST['keyTerm'],  
 							$_POST['noteOrder'], 
 							$_POST['parentID']);
+	}
+	elseif($action == "updateParent")
+	{
+		$notes = new Notes();
+		$notes->updateParent($_POST['noteID'], $_POST['parentID']);
 	}
 ?>
