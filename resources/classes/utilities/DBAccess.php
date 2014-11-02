@@ -15,7 +15,7 @@ class DBAccess
 	 * @param string $user
 	 * @param string $password
 	 */
-	function __construct($user = "root", $password = "Xeno88976212!")
+	function __construct($user = "admin2khhnZ1", $password = "AHXtm7R4scYw")
 	{
 		$this->user = $user;
 		$this->password = $password;
@@ -34,7 +34,7 @@ class DBAccess
 	function connect()
 	{
 		try{
-			$this->db = new PDO("mysql:host=localhost;dbname=notes", $this->user, $this->password);
+			$this->db = new PDO("mysql:host=127.5.185.2;dbname=notes", $this->user, $this->password);
 		}
 		catch(PDOException $ex){
 			$this->errorMessage = "Error!: " . $ex->getMessage();
